@@ -6,6 +6,51 @@
 .head-line svg {
   width: 480px;
 }
+.top-nav {
+  display: flex;
+  margin-top: 1em;
+}
+.top-menu i {
+  margin: 0 5px;
+}
+.mobile-menu {
+  display: none;
+  cursor: pointer;
+}
+.search-area {
+  display: none;
+}
+.search:hover {
+  cursor: pointer;
+}
+.search-box {
+  border: 1px solid #676767;
+  outline: none;
+  border-radius: 5px;
+}
+.search-button {
+  border: 1px solid #676767;
+  outline: none;
+  border-radius: 5px;
+}
+.search-button:hover {
+  background: rgb(143, 225, 143);
+}
+
+/*사이드바*/
+.inner-menu ul li {
+  list-style: none;
+  margin: 10px 10px;
+}
+.inner-menu ul li a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+.inner-menu ul li a:hover {
+  color: rgb(143, 225, 143);
+}
+
 .menus {
   margin-top: 1em;
   display: flex;
@@ -18,14 +63,6 @@
   border: none;
   background: none;
   margin: 5px;
-}
-.hamburger {
-  display: none;
-}
-.menus i {
-  border: none;
-  background: none;
-  margin: 0px 5px;
 }
 
 .menus button:hover {
@@ -45,7 +82,7 @@
   .menus {
     display: none;
   }
-  .hamburger {
-    display: block;
+  .mobile-menu {
+    display: inline;
   }
 }

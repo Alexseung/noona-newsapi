@@ -18,6 +18,60 @@
   </head>
   <body>
     <section class="container">
+      <div class="top-nav">
+        <div class="top-menu">
+          <i
+            class="fa-solid fa-bars mobile-menu btn-primary"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#staticBackdrop"
+            aria-controls="staticBackdrop"
+          ></i>
+          <i class="fa-solid fa-magnifying-glass search"> </i>
+        </div>
+        <div class="search-area">
+          <input type="text" placeholder="검색" class="search-box" />
+          <button class="search-button">Go</button>
+        </div>
+        <!-- side bar -->
+        <div
+          class="offcanvas offcanvas-start"
+          data-bs-backdrop="static"
+          tabindex="-1"
+          id="staticBackdrop"
+          aria-labelledby="staticBackdropLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="staticBackdropLabel">Menu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body inner-menu">
+            <ul>
+              <li><a href="#">Sport</a></li>
+              <li><a href="#">Tech</a></li>
+              <li><a href="#">World</a></li>
+              <li><a href="#">Finance</a></li>
+              <li><a href="#">Politics</a></li>
+              <li><a href="#">Business</a></li>
+              <li><a href="#">Economics</a></li>
+              <li><a href="#">Entertainment</a></li>
+              <li><a href="#">Beauty</a></li>
+              <li><a href="#">Travel</a></li>
+              <li><a href="#">Music</a></li>
+              <li><a href="#">Food</a></li>
+              <li><a href="#">Science</a></li>
+              <li><a href="#">Gaming</a></li>
+              <li><a href="#">Energy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="side-bar"></div>
+      <!-- //side bar -->
       <section>
         <div class="head-line">
           <svg viewBox="0 0 184 25" fill="#000" aria-hidden="true">
@@ -27,7 +81,6 @@
           </svg>
         </div>
         <div class="menus">
-          <button class="hamburger"><i class="fa-solid fa-bars"></i></button>
           <button>Sport</button>
           <button>Tech</button>
           <button>World</button>
@@ -45,7 +98,9 @@
           <button>Energy</button>
         </div>
       </section>
-      <section>
+
+      <!-- articles -->
+      <section id="articles">
         <div class="row news">
           <div class="col-lg-4">
             <img
