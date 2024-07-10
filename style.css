@@ -77,6 +77,9 @@
 .news {
   border-bottom: 2px solid black;
 }
+.description {
+  text-overflow: ellipsis;
+}
 
 @media screen and (max-width: 625px) {
   .menus {

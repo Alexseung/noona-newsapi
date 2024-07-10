@@ -29,8 +29,13 @@
           <i class="fa-solid fa-magnifying-glass search"> </i>
         </div>
         <div class="search-area">
-          <input type="text" placeholder="검색" class="search-box" />
-          <button class="search-button">Go</button>
+          <input
+            type="text"
+            placeholder="검색"
+            class="search-box"
+            id="search-input"
+          />
+          <button class="search-button" onClick="getNewsByKeyword()">Go</button>
         </div>
         <!-- side bar -->
         <div
@@ -82,26 +87,18 @@
         </div>
         <div class="menus">
           <button>Sport</button>
-          <button>Tech</button>
-          <button>World</button>
-          <button>Finance</button>
-          <button>Politics</button>
           <button>Business</button>
-          <button>Economics</button>
+          <button>General</button>
           <button>Entertainment</button>
-          <button>Beauty</button>
-          <button>Travel</button>
-          <button>Music</button>
-          <button>Food</button>
+          <button>Health</button>
           <button>Science</button>
-          <button>Gaming</button>
-          <button>Energy</button>
+          <button>Technology</button>
         </div>
       </section>
 
       <!-- articles -->
-      <section id="articles">
-        <div class="row news">
+      <section id="news-board">
+        <!-- <div class="row news">
           <div class="col-lg-4">
             <img
               class="news-img-size"
@@ -113,10 +110,11 @@
             <p>어제부터 봄</p>
             <div>오늘 에피소드4까지 봤음</div>
           </div>
-        </div>
+        </div> -->
       </section>
     </section>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

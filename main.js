@@ -1,21 +1,54 @@
 let search = document.querySelector('.search');
 let searchArea = document.querySelector('.search-area');
-let articles = document.getElementById('articles');
+let inputArea = document.getElementById('input-area');
+let searchBtn = document.querySelector('.search-button');
+let menus = document.querySelectorAll('.menus button'); //지금 menus는 array임
+menus.forEach(menu =>
+  menu.addEventListener('click', event => getNewsByCategory(event))
+);
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
-let news = [];
+
+let newsList = [];
 const getLatestNews = async () => {
   const url = new URL(
-    `https://yoon-newsapi.netlify.app//top-headlines?country=kr`
+    `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
   );
-  //   https://newsapi.org/v2/top-headlines?country=kr&apikey=${API_KEY}
+
+  // https://yoon-newsapi.netlify.app//top-headlines?country=kr
   const response = await fetch(url);
   const data = await response.json();
-  news = data.articles;
-  console.log('news', news);
+  newsList = data.articles;
+  console.log('news', newsList);
   render();
 };
 getLatestNews();
+
+const getNewsByCategory = async event => {
+  const category = event.target.textContent.toLowerCase();
+  console.log('category', category);
+  const url = new URL(
+    `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
+  );
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log('ddd', data);
+  newsList = data.articles;
+  render();
+};
+
+const getNewsByKeyword = async () => {
+  const keyword = document.getElementById('search-input').value;
+  console.log('keyword', keyword);
+  const url = new URL(
+    `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apikey=${API_KEY}`
+  );
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log('keyword data', data);
+  newsList = data.articles;
+  render();
+};
 
 search.addEventListener('click', function () {
   if (searchArea.style.display === 'none' || searchArea.style.display === '') {
@@ -26,26 +59,35 @@ search.addEventListener('click', function () {
 });
 
 const render = () => {
-  let newsHTML = news
-    .map(article => {
+  let newsHTML = newsList
+    .map(news => {
       return `<div class="row news">
             <div class="col-lg-4">
               <img
                 class="news-img-size"
-                src="${article.urlToImage}"
+                src="${news.urlToImage || 'images / No_Image_Available.jpg'}"
                 alt="News Image"
+                onerror="this.onerror=null;this.src='images/No_Image_Available.jpg';"
               />
             </div>
             <div class="col-lg-8">
-              <h2>${article.title}</h2>
-              <p>${article.description}</p>
-              <div>${article.content}</div>
+              <h2>${news.title}</h2>
+               <p>${
+                 news.description == null || news.description == ''
+                   ? '내용없음'
+                   : news.description.length > 200
+                   ? news.description.substring(0, 200) + '...'
+                   : news.description
+               }</p>
+              <div>${news.source.name || 'No source'} * ${moment(
+        news.publishedAt
+      ).fromNow()}</div>
             </div>
           </div>`;
     })
     .join(''); // 배열을 문자열로 변환(이 부분 더 학습)
 
-  articles.innerHTML = newsHTML; // articles 요소에 HTML 삽입
+  document.getElementById('news-board').innerHTML = newsHTML; // articles 요소에 HTML 삽입
 };
 
 // const render = () => {
