@@ -12,9 +12,9 @@ const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
 let newsList = [];
 const getLatestNews = async () => {
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
+    `https://yoon-newsapi.netlify.app//top-headlines?country=kr`
   );
-
+  // https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}
   // https://yoon-newsapi.netlify.app//top-headlines?country=kr
   const response = await fetch(url);
   const data = await response.json();
@@ -28,7 +28,7 @@ const getNewsByCategory = async event => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
+    `https://yoon-newsapi.netlify.app//top-headlines?country=kr&category=${category}`
   );
   const response = await fetch(url);
   const data = await response.json();
@@ -41,7 +41,7 @@ const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
   const url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apikey=${API_KEY}`
+    `https://yoon-newsapi.netlify.app//top-headlines?country=kr&q=${keyword}`
   );
   const response = await fetch(url);
   const data = await response.json();
