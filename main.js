@@ -4,6 +4,7 @@ let inputArea = document.getElementById('input-area');
 let searchBtn = document.querySelector('.search-button');
 let menus = document.querySelectorAll('.menus button'); //지금 menus는 array임
 let sideMenus = document.querySelectorAll('#side-menu li a');
+let searchInput = document.getElementById('search-input');
 //사이드 메뉴, 상단 메뉴 추가
 sideMenus.forEach(menu =>
   menu.addEventListener('click', event => getNewsByCategory(event))
@@ -11,6 +12,17 @@ sideMenus.forEach(menu =>
 menus.forEach(menu =>
   menu.addEventListener('click', event => getNewsByCategory(event))
 );
+
+searchInput.addEventListener('focus', () => {
+  searchInput.value = '';
+});
+searchInput.addEventListener('keydown', handleKeyDown);
+function handleKeyDown(event) {
+  if (event.key === 'Enter') {
+    getNewsByKeyword();
+    searchInput.value = '';
+  }
+}
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
 
