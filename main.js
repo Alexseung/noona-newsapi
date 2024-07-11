@@ -3,6 +3,11 @@ let searchArea = document.querySelector('.search-area');
 let inputArea = document.getElementById('input-area');
 let searchBtn = document.querySelector('.search-button');
 let menus = document.querySelectorAll('.menus button'); //지금 menus는 array임
+let sideMenus = document.querySelectorAll('#side-menu li a');
+//사이드 메뉴, 상단 메뉴 추가
+sideMenus.forEach(menu =>
+  menu.addEventListener('click', event => getNewsByCategory(event))
+);
 menus.forEach(menu =>
   menu.addEventListener('click', event => getNewsByCategory(event))
 );
@@ -16,8 +21,7 @@ const getLatestNews = async () => {
   );
   // https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}
   // https://yoon-newsapi.netlify.app//top-headlines?country=kr
-  const response = await fetch(url);
-  const data = await response.json();
+  const data = await (await fetch(url)).json();
   newsList = data.articles;
   console.log('news', newsList);
   render();
@@ -30,8 +34,7 @@ const getNewsByCategory = async event => {
   const url = new URL(
     `https://yoon-newsapi.netlify.app//top-headlines?country=kr&category=${category}`
   );
-  const response = await fetch(url);
-  const data = await response.json();
+  const data = await (await fetch(url)).json();
   console.log('ddd', data);
   newsList = data.articles;
   render();
@@ -43,8 +46,7 @@ const getNewsByKeyword = async () => {
   const url = new URL(
     `https://yoon-newsapi.netlify.app//top-headlines?country=kr&q=${keyword}`
   );
-  const response = await fetch(url);
-  const data = await response.json();
+  const data = await (await fetch(url)).json();
   console.log('keyword data', data);
   newsList = data.articles;
   render();
@@ -85,7 +87,7 @@ const render = () => {
             </div>
           </div>`;
     })
-    .join(''); // 배열을 문자열로 변환(이 부분 더 학습)
+    .join('');
 
   document.getElementById('news-board').innerHTML = newsHTML; // articles 요소에 HTML 삽입
 };
