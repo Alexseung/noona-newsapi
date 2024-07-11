@@ -23,45 +23,44 @@ function handleKeyDown(event) {
     searchInput.value = '';
   }
 }
+// url과 fetch부분 전부 다 전역변수로 바꿔버림.
+// 반복적으로 사용되는 부분은 전역변수로 묶기
+let url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/`);
+
+const getNews = async () => {
+  const response = await fetch(url);
+  const data = await response.json();
+  newsList = data.articles;
+  render();
+};
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
 
 let newsList = [];
 const getLatestNews = async () => {
-  const url = new URL(
-    `https://yoon-newsapi.netlify.app//top-headlines?country=kr`
-  );
+  url = new URL();
   // https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}
   // https://yoon-newsapi.netlify.app//top-headlines?country=kr
-  const data = await (await fetch(url)).json();
-  newsList = data.articles;
-  console.log('news', newsList);
-  render();
+  getNews();
 };
 getLatestNews();
 
 const getNewsByCategory = async event => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
-  const url = new URL(
+  url = new URL(
     `https://yoon-newsapi.netlify.app//top-headlines?country=kr&category=${category}`
   );
-  const data = await (await fetch(url)).json();
-  console.log('ddd', data);
-  newsList = data.articles;
-  render();
+  getNews();
 };
 
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
-  const url = new URL(
+  url = new URL(
     `https://yoon-newsapi.netlify.app//top-headlines?country=kr&q=${keyword}`
   );
-  const data = await (await fetch(url)).json();
-  console.log('keyword data', data);
-  newsList = data.articles;
-  render();
+  getNews();
 };
 
 search.addEventListener('click', function () {
