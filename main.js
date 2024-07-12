@@ -35,14 +35,12 @@ const getNews = async () => {
 };
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
-let url = new URL(
-  `https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&pageSize=${pageSize}&page=${page}${category}${keyword}`
-);
+let url = new URL(`https://yoon-newsapi.netlify.app//top-headlines?country=kr`);
 let newsList = [];
 const getLatestNews = async () => {
-  url = new URL();
+  url = new URL(`https://yoon-newsapi.netlify.app//top-headlines?country=kr`);
   // https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}
-  // https://yoon-newsapi.netlify.app//top-headlines?country=kr
+
   getNews();
 };
 getLatestNews();
