@@ -130,7 +130,7 @@ const render = () => {
             <div class="col-lg-4">
               <img
                 class="news-img-size"
-                src="${news.urlToImage || 'images / No_Image_Available.jpg'}"
+                src="${news.urlToImage || 'images/No_Image_Available.jpg'}"
                 alt="News Image"
                 onerror="this.onerror=null;this.src='images/No_Image_Available.jpg';"
               />
