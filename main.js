@@ -1,3 +1,12 @@
+//newsAPI 불러오기
+//HTML에 기사 내용 작성
+//메뉴 버튼 활성화
+//모바일 화면 사이드 메뉴 버튼 활성화
+//검색(keyword) 기능
+//에러 보여주기 (검색 안되는 경우 에러창)
+
+//20240712 로고 누르면 홈 버튼
+
 let search = document.querySelector('.search');
 let searchArea = document.querySelector('.search-area');
 let inputArea = document.getElementById('input-area');
@@ -5,14 +14,26 @@ let searchBtn = document.querySelector('.search-button');
 let menus = document.querySelectorAll('.menus button'); //지금 menus는 array임
 let sideMenus = document.querySelectorAll('#side-menu li a');
 let searchInput = document.getElementById('search-input');
-//사이드 메뉴, 상단 메뉴 추가
+
+//apikey, url, newsList
+const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
+let url = new URL(
+  // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
+  `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+);
+let newsList = [];
+
+//사이드바
 sideMenus.forEach(menu =>
   menu.addEventListener('click', event => getNewsByCategory(event))
 );
+
+//상단 메뉴
 menus.forEach(menu =>
   menu.addEventListener('click', event => getNewsByCategory(event))
 );
 
+//인풋창
 searchInput.addEventListener('focus', () => {
   searchInput.value = '';
 });
@@ -23,10 +44,17 @@ function handleKeyDown(event) {
     searchInput.value = '';
   }
 }
-// url과 fetch부분 전부 다 전역변수로 바꿔버림.
-// 반복적으로 사용되는 부분은 전역변수로 묶기
 
-// https://study-website-be-bbb1539aa813.herokuapp.com/
+//로고 누르면 홈으로
+async function home() {
+  url = new URL(
+    // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+  );
+  await getNews();
+}
+
+//뉴스 불러오기 (error catch)
 const getNews = async () => {
   try {
     const response = await fetch(url);
@@ -45,12 +73,7 @@ const getNews = async () => {
   }
 };
 
-const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
-let url = new URL(
-  // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
-  `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
-);
-let newsList = [];
+// 뉴스 불러오기
 const getLatestNews = async () => {
   url = new URL(
     // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
@@ -60,6 +83,7 @@ const getLatestNews = async () => {
 };
 getLatestNews();
 
+//카테고리 선택
 const getNewsByCategory = async event => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
@@ -70,6 +94,7 @@ const getNewsByCategory = async event => {
   await getNews();
 };
 
+//키워드 검색
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
@@ -80,6 +105,7 @@ const getNewsByKeyword = async () => {
   await getNews();
 };
 
+//search icon을 활용한 input창 활성화
 search.addEventListener('click', function () {
   if (searchArea.style.display === 'none' || searchArea.style.display === '') {
     searchArea.style.display = 'flex';
@@ -88,6 +114,7 @@ search.addEventListener('click', function () {
   }
 });
 
+//기사 UI
 const render = () => {
   let newsHTML = newsList
     .map(news => {
@@ -120,6 +147,7 @@ const render = () => {
   document.getElementById('news-board').innerHTML = newsHTML; // articles 요소에 HTML 삽입
 };
 
+//에러 메세지
 const errorRender = errorMessage => {
   const errorHTML = `<div class="alert alert-danger" role="alert">
   ${errorMessage}
