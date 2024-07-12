@@ -11,6 +11,7 @@
 }
 .head-line-title:hover {
   cursor: pointer;
+  transform: scale(1.1);
 }
 .head-line svg {
   width: 480px;
@@ -88,6 +89,10 @@
 }
 .description {
   text-overflow: ellipsis;
+}
+
+.clicked {
+  font-weight: 600;
 }
 
 @media screen and (max-width: 625px) {

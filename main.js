@@ -5,7 +5,7 @@
 //검색(keyword) 기능
 //에러 보여주기 (검색 안되는 경우 에러창)
 
-//20240712 로고 누르면 홈 버튼
+//20240712 로고 누르면 홈 버튼, 활성화된 카테고리 표시
 
 let search = document.querySelector('.search');
 let searchArea = document.querySelector('.search-area');
@@ -83,9 +83,17 @@ const getLatestNews = async () => {
 };
 getLatestNews();
 
-//카테고리 선택
+//카테고리 선택 (활성화된 카테고리 표시)
+let previousCategory = null;
 const getNewsByCategory = async event => {
   const category = event.target.textContent.toLowerCase();
+  const currentCategory = event.target;
+  if (previousCategory) {
+    previousCategory.classList.remove('clicked');
+  }
+  currentCategory.classList.add('clicked');
+  previousCategory = currentCategory;
+
   console.log('category', category);
   url = new URL(
     // `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
