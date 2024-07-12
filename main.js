@@ -28,20 +28,35 @@ function handleKeyDown(event) {
 
 // https://study-website-be-bbb1539aa813.herokuapp.com/
 const getNews = async () => {
-  const response = await fetch(url);
-  const data = await response.json();
-  newsList = data.articles;
-  render();
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (response.status === 200) {
+      if (data.articles.length === 0) {
+        throw new Error('No result for this search');
+      }
+      newsList = data.articles;
+      render();
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    errorRender(error.message);
+  }
 };
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
-let url = new URL(`https://yoon-newsapi.netlify.app//top-headlines?country=kr`);
+let url = new URL(
+  // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
+  `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+);
 let newsList = [];
 const getLatestNews = async () => {
-  url = new URL(`https://yoon-newsapi.netlify.app//top-headlines?country=kr`);
-  // https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}
-
-  getNews();
+  url = new URL(
+    // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+  );
+  await getNews();
 };
 getLatestNews();
 
@@ -49,18 +64,20 @@ const getNewsByCategory = async event => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
   url = new URL(
-    `https://yoon-newsapi.netlify.app//top-headlines?country=kr&category=${category}`
+    // `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10&category=${category}`
   );
-  getNews();
+  await getNews();
 };
 
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
   url = new URL(
-    `https://yoon-newsapi.netlify.app//top-headlines?country=kr&q=${keyword}`
+    // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apikey=${API_KEY}`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10&q=${keyword}`
   );
-  getNews();
+  await getNews();
 };
 
 search.addEventListener('click', function () {
@@ -103,23 +120,10 @@ const render = () => {
   document.getElementById('news-board').innerHTML = newsHTML; // articles 요소에 HTML 삽입
 };
 
-// const render = () => {
-//   let newsHTML = news
-//     .map(article => {
-//       return `<div class="row news">
-//           <div class="col-lg-4">
-//             <img
-//               class="news-img-size"
-//               src="${atcicle.urlToImage}"
-//             />
-//           </div>
-//           <div class="col-lg-8">
-//             <h2>귀칼</h2>
-//             <p>어제부터 봄</p>
-//             <div>오늘 에피소드4까지 봤음</div>
-//           </div>
-//         </div>`;
-//     })
-//     .join();
-//   Document.getElementById('articles').innerHTML = newsHTML;
-// };
+const errorRender = errorMessage => {
+  const errorHTML = `<div class="alert alert-danger" role="alert">
+  ${errorMessage}
+</div>`;
+
+  document.getElementById('news-board').innerHTML = errorHTML;
+};
