@@ -25,8 +25,8 @@ function handleKeyDown(event) {
 }
 // url과 fetch부분 전부 다 전역변수로 바꿔버림.
 // 반복적으로 사용되는 부분은 전역변수로 묶기
-let url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/`);
 
+// https://study-website-be-bbb1539aa813.herokuapp.com/
 const getNews = async () => {
   const response = await fetch(url);
   const data = await response.json();
@@ -35,7 +35,9 @@ const getNews = async () => {
 };
 
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
-
+let url = new URL(
+  `https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&pageSize=${pageSize}&page=${page}${category}${keyword}`
+);
 let newsList = [];
 const getLatestNews = async () => {
   url = new URL();
