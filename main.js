@@ -17,9 +17,11 @@ let searchInput = document.getElementById('search-input');
 
 //apikey, url, newsList
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
+const originURL = `https://newsapi.org/v2/top-headlines?`;
+const noonaURL = `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?`;
 let url = new URL(
-  // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
-  `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+  // `${originURL}country=kr&pageSize=10&apikey=${API_KEY}`
+  `${noonaURL}country=kr&pageSize=10`
 );
 let newsList = [];
 
@@ -48,8 +50,8 @@ function handleKeyDown(event) {
 //로고 누르면 홈으로
 async function home() {
   url = new URL(
-    // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+    // `${originURL}country=kr&pageSize=10&apikey=${API_KEY}`
+    `${noonaURL}country=kr&pageSize=10`
   );
   await getNews();
 }
@@ -76,8 +78,8 @@ const getNews = async () => {
 // 뉴스 불러오기
 const getLatestNews = async () => {
   url = new URL(
-    // `https://newsapi.org/v2/top-headlines?country=kr&pageSize=10&apikey=${API_KEY}`
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10`
+    // `${originURL}country=kr&pageSize=10&apikey=${API_KEY}`
+    `${noonaURL}country=kr&pageSize=10`
   );
   await getNews();
 };
@@ -96,8 +98,8 @@ const getNewsByCategory = async event => {
 
   console.log('category', category);
   url = new URL(
-    // `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apikey=${API_KEY}`
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10&category=${category}`
+    // `${originURL}country=kr&category=${category}&apikey=${API_KEY}`
+    `${noonaURL}country=kr&pageSize=10&category=${category}`
   );
   await getNews();
 };
@@ -107,8 +109,8 @@ const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
   url = new URL(
-    // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apikey=${API_KEY}`
-    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&pageSize=10&q=${keyword}`
+    // `${originURL}country=kr&q=${keyword}&apikey=${API_KEY}`
+    `${noonaURL}country=kr&pageSize=10&q=${keyword}`
   );
   await getNews();
 };
