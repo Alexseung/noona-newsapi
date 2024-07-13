@@ -193,7 +193,7 @@ const paginationRender = () => {
 
   let paginationHTML = ``;
   if (page > 1) {
-    paginationHTML = `<li class="page-item"><a class="page-link" onClick=(moveToPage(${firstPage}))>First</a></li>
+    paginationHTML = `<li class="page-item"><a class="page-link" onClick=(moveToPage(${(page = 1)}))>First</a></li>
     <li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page - 1
     }))>Previous</a></li>`;
