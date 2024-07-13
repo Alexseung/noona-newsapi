@@ -53,6 +53,7 @@ async function home() {
     // `${originURL}country=kr&pageSize=10&pageSize=${pageSize}&apikey=${API_KEY}`
     `${noonaURL}country=kr&pageSize=10`
   );
+  previousCategory.classList.remove('clicked');
   await getNews();
 }
 
@@ -193,7 +194,7 @@ const paginationRender = () => {
 
   let paginationHTML = ``;
   if (page > 1) {
-    paginationHTML = `<li class="page-item"><a class="page-link" onClick=(moveToPage(${(page = 1)}))>First</a></li>
+    paginationHTML = `<li class="page-item"><a class="page-link" onClick='moveToPage(1)'>First</a></li>
     <li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page - 1
     }))>Previous</a></li>`;
@@ -207,7 +208,7 @@ const paginationRender = () => {
   if (page < totalPages) {
     paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page + 1
-    }))>Next</a></li>
+    }))>Next</a></li
         <li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>
     `;
   }
