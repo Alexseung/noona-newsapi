@@ -54,6 +54,7 @@ async function home() {
     `${noonaURL}country=kr&pageSize=10`
   );
   previousCategory.classList.remove('clicked');
+  page = 1;
   await getNews();
 }
 
@@ -193,9 +194,13 @@ const paginationRender = () => {
     lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
 
   let paginationHTML = ``;
-  if (page > 1) {
+  if (page > 1 && totalPages > 2) {
     paginationHTML = `<li class="page-item"><a class="page-link" onClick='moveToPage(1)'>First</a></li>
     <li class="page-item"><a class="page-link" onClick=(moveToPage(${
+      page - 1
+    }))>Previous</a></li>`;
+  } else if (totalPages > 1 && totalPages < 3) {
+    paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page - 1
     }))>Previous</a></li>`;
   }
@@ -205,12 +210,14 @@ const paginationRender = () => {
       i === page ? 'active' : ''
     }" onClick="moveToPage(${i})"><a class="page-link">${i}</a></li>`;
   }
-  if (page < totalPages) {
+  if (page < totalPages && totalPages > 2) {
     paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page + 1
-    }))>Next</a></li
+    }))>Next</a></li>
         <li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>
     `;
+  } else if (totalPages > 1 && totalPages < 3) {
+    paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>`;
   }
   document.querySelector('.pagination').innerHTML = paginationHTML;
 
