@@ -50,23 +50,34 @@ function handleKeyDown(event) {
 //로고 누르면 홈으로
 async function home() {
   url = new URL(
-    // `${originURL}country=kr&pageSize=10&apikey=${API_KEY}`
+    // `${originURL}country=kr&pageSize=10&pageSize=${pageSize}&apikey=${API_KEY}`
     `${noonaURL}country=kr&pageSize=10`
   );
   await getNews();
 }
 
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 //뉴스 불러오기 (error catch)
 const getNews = async () => {
   try {
+    url.searchParams.set('page', page);
+    url.searchParams.set('pageSize', pageSize);
+
     const response = await fetch(url);
     const data = await response.json();
+    console.log('data', data);
     if (response.status === 200) {
       if (data.articles.length === 0) {
         throw new Error('No result for this search');
       }
       newsList = data.articles;
+      totalResults = data.totalResults;
       render();
+      paginationRender();
     } else {
       throw new Error(data.message);
     }
@@ -78,7 +89,7 @@ const getNews = async () => {
 // 뉴스 불러오기
 const getLatestNews = async () => {
   url = new URL(
-    // `${originURL}country=kr&pageSize=10&apikey=${API_KEY}`
+    // `${originURL}country=kr&pageSize=${pageSize}&apikey=${API_KEY}`
     `${noonaURL}country=kr&pageSize=10`
   );
   await getNews();
@@ -98,9 +109,11 @@ const getNewsByCategory = async event => {
 
   console.log('category', category);
   url = new URL(
-    // `${originURL}country=kr&category=${category}&apikey=${API_KEY}`
+    // `${originURL}country=kr&category=${category}&pageSize=${pageSize}&apikey=${API_KEY}`
     `${noonaURL}country=kr&pageSize=10&category=${category}`
   );
+  page = 1;
+
   await getNews();
 };
 
@@ -112,6 +125,8 @@ const getNewsByKeyword = async () => {
     // `${originURL}country=kr&q=${keyword}&apikey=${API_KEY}`
     `${noonaURL}country=kr&pageSize=10&q=${keyword}`
   );
+  page = 1;
+
   await getNews();
 };
 
@@ -165,3 +180,60 @@ const errorRender = errorMessage => {
 
   document.getElementById('news-board').innerHTML = errorHTML;
 };
+
+const paginationRender = () => {
+  const totalPages = Math.ceil(totalResults / pageSize);
+  const pageGroup = Math.ceil(page / groupSize);
+  let lastPage = pageGroup * groupSize;
+  if (lastPage > totalPages) {
+    lastPage = totalPages;
+  }
+  const firstPage =
+    lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+
+  let paginationHTML = ``;
+  if (page > 1) {
+    paginationHTML = `<li class="page-item"><a class="page-link" onClick=(moveToPage(${firstPage}))>First</a></li>
+    <li class="page-item"><a class="page-link" onClick=(moveToPage(${
+      page - 1
+    }))>Previous</a></li>`;
+  }
+
+  for (let i = firstPage; i <= lastPage; i++) {
+    paginationHTML += `<li class="page-item ${
+      i === page ? 'active' : ''
+    }" onClick="moveToPage(${i})"><a class="page-link">${i}</a></li>`;
+  }
+  if (page < totalPages) {
+    paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
+      page + 1
+    }))>Next</a></li>
+        <li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>
+    `;
+  }
+  document.querySelector('.pagination').innerHTML = paginationHTML;
+
+  //   <nav aria-label="Page navigation example">
+  //   <ul class="pagination">
+  //     <li class="page-item">
+  //       <a class="page-link" href="#" aria-label="Previous">
+  //         <span aria-hidden="true">&laquo;</span>
+  //       </a>
+  //     </li>
+  //     <li class="page-item"><a class="page-link" href="#">1</a></li>
+  //     <li class="page-item"><a class="page-link" href="#">2</a></li>
+  //     <li class="page-item"><a class="page-link" href="#">3</a></li>
+  //     <li class="page-item">
+  //       <a class="page-link" href="#" aria-label="Next">
+  //         <span aria-hidden="true">&raquo;</span>
+  //       </a>
+  //     </li>
+  //   </ul>
+  // </nav>
+};
+const moveToPage = pageNum => {
+  console.log('move', pageNum);
+  page = pageNum;
+  getNews();
+};
+getLatestNews();
