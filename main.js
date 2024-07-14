@@ -183,6 +183,7 @@ const errorRender = errorMessage => {
   document.getElementById('news-board').innerHTML = errorHTML;
 };
 
+//페이지 표시
 const paginationRender = () => {
   const totalPages = Math.ceil(totalResults / pageSize);
   const pageGroup = Math.ceil(page / groupSize);
@@ -195,14 +196,14 @@ const paginationRender = () => {
 
   let paginationHTML = ``;
   if (page > 1 && totalPages > 2) {
-    paginationHTML = `<li class="page-item"><a class="page-link" onClick='moveToPage(1)'>First</a></li>
+    paginationHTML = `<li class="page-item"><a class="page-link" onClick='moveToPage(1)'>&lt&lt</a></li>
     <li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page - 1
-    }))>Previous</a></li>`;
+    }))>&lt</a></li>`;
   } else if (totalPages > 1 && totalPages < 3) {
     paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page - 1
-    }))>Previous</a></li>`;
+    }))>&lt</a></li>`;
   }
 
   for (let i = firstPage; i <= lastPage; i++) {
@@ -213,11 +214,13 @@ const paginationRender = () => {
   if (page < totalPages && totalPages > 2) {
     paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
       page + 1
-    }))>Next</a></li>
-        <li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>
+    }))>&gt</a></li>
+        <li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>&gt&gt</a></li>
     `;
   } else if (totalPages > 1 && totalPages < 3) {
-    paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${totalPages}))>Last</a></li>`;
+    paginationHTML += `<li class="page-item"><a class="page-link" onClick=(moveToPage(${
+      page + 1
+    }))>&gt</a></li>`;
   }
   document.querySelector('.pagination').innerHTML = paginationHTML;
 
