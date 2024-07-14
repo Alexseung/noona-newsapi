@@ -15,6 +15,12 @@ let menus = document.querySelectorAll('.menus button'); //지금 menus는 array�
 let sideMenus = document.querySelectorAll('#side-menu li a');
 let searchInput = document.getElementById('search-input');
 
+//pagination
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 //apikey, url, newsList
 const API_KEY = `203207a5e7ec4700b1717e879ed1396a`;
 const originURL = `https://newsapi.org/v2/top-headlines?`;
@@ -57,11 +63,6 @@ async function home() {
   page = 1;
   await getNews();
 }
-
-let totalResults = 0;
-let page = 1;
-const pageSize = 10;
-const groupSize = 5;
 
 //뉴스 불러오기 (error catch)
 const getNews = async () => {

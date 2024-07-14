@@ -113,6 +113,11 @@ a:hover {
   display: none;
 }
 
+.page-area {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 625px) {
   .menus {
     display: none;
